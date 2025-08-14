@@ -36,6 +36,9 @@ dependencies {
 
     testCompileOnly("org.projectlombok:lombok:1.18.38")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.38")
+
+    // HikariCP 설정
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '7.0.1'
 }
 
 test {
