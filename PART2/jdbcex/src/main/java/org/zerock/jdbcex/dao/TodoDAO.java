@@ -44,7 +44,7 @@ public class TodoDAO {
     }
 
     // TodoVO 객체를 데이터베이스에 추가하는 기능 (등록)
-    public void insert(TodoVO vo) throws Exception{
+    public void insert(TodoVO vo) throws Exception {
         String sql = "insert into tbl_todo (title, dueDate, finished) values (?, ?, ?)";
 
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
@@ -58,7 +58,7 @@ public class TodoDAO {
     }
 
     // tbl_todo 내의 모든 데이터를 가져오는 기능 (목록)
-    public List<TodoVO> selectAll() throws Exception{
+    public List<TodoVO> selectAll() throws Exception {
 
         String sql = "select * from tbl_todo";
         @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
@@ -77,6 +77,27 @@ public class TodoDAO {
             list.add(vo);
         }
         return list;
+    }
+
+    // tbl_todo 의 특정 데이터만 가져오는 기능 (조회)
+    public TodoVO selectOne(Long tno) throws Exception {
+        String sql = "select * from tbl_todo where tno =?";
+
+        @Cleanup Connection connection = ConnectionUtil.INSTANCE.getConnection();
+        @Cleanup PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        preparedStatement.setLong(1, tno);
+
+        @Cleanup ResultSet resultSet = preparedStatement.executeQuery();
+
+        resultSet.next();
+        TodoVO vo = TodoVO.builder()
+                .tno(resultSet.getLong("tno"))
+                .title(resultSet.getString("title"))
+                .dueDate(resultSet.getDate("dueDate").toLocalDate())
+                .finished(resultSet.getBoolean("finished"))
+                .build();
+        return vo;
     }
 
 }
