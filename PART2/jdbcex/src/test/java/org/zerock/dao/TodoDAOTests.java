@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.List;
 
 public class TodoDAOTests {
 
@@ -41,7 +42,14 @@ public class TodoDAOTests {
 
     @Test
     public void testInsert() throws Exception {
-        TodoVO todoVO = TodoVO.builder().title("Sample Title...").dueDate(LocalDate.of(2025,8,15)).build();
+        TodoVO todoVO = TodoVO.builder().title("Sample Title...").dueDate(LocalDate.of(2025, 8, 15)).build();
         todoDAO.insert(todoVO);
+    }
+
+    @Test
+    public void testList() throws Exception {
+        List<TodoVO> list = todoDAO.selectAll();
+
+        list.forEach(vo -> System.out.println(vo));
     }
 }
