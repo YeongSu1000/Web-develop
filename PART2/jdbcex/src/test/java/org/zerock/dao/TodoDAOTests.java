@@ -5,10 +5,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.zerock.jdbcex.dao.ConnectionUtil;
 import org.zerock.jdbcex.dao.TodoDAO;
+import org.zerock.jdbcex.domain.TodoVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 
 public class TodoDAOTests {
 
@@ -37,4 +39,9 @@ public class TodoDAOTests {
         return now;
     }
 
+    @Test
+    public void testInsert() throws Exception {
+        TodoVO todoVO = TodoVO.builder().title("Sample Title...").dueDate(LocalDate.of(2025,8,15)).build();
+        todoDAO.insert(todoVO);
+    }
 }
