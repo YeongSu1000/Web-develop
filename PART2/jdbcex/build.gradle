@@ -27,21 +27,26 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
-    // Maria DB와 연동하기 위한 JDBC 드라이버 필요
+    // JDBC 드라이버
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.3'
 
-    // Lombok 라이브러리 추가
+    // Lombok
     compileOnly("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")
 
     testCompileOnly("org.projectlombok:lombok:1.18.38")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.38")
 
-    // HikariCP 설정
+    // HikariCP
     implementation group: 'com.zaxxer', name: 'HikariCP', version: '7.0.1'
 
-    // DTO 와 VO 간의 객체 변환을 자동화하기 위한 ModelMapper 라이브러리
+    // ModelMapper
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.4'
+
+    // Log4j2
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.25.3'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.25.3'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.25.3'
 }
 
 test {
