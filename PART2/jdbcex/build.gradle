@@ -39,6 +39,9 @@ dependencies {
 
     // HikariCP 설정
     implementation group: 'com.zaxxer', name: 'HikariCP', version: '7.0.1'
+
+    // DTO 와 VO 간의 객체 변환을 자동화하기 위한 ModelMapper 라이브러리
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.4'
 }
 
 test {
