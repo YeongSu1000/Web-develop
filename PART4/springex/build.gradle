@@ -32,6 +32,8 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-context', version: '5.3.39'
     implementation group: 'org.springframework', name: 'spring-test', version: '5.3.39'
     implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.39'
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.39'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.39'
 
     compileOnly("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")
@@ -47,6 +49,9 @@ dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.3'
 
     implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.0.1'
+
+    implementation 'org.mybatis:mybatis:3.5.17'
+    implementation 'org.mybatis:mybatis-spring:2.1.2'
 }
 
 test {
