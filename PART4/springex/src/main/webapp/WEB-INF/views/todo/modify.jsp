@@ -59,13 +59,13 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Title</span>
                                 <input class="form-control" type="text" name="title"
-                                       value='<c:out value="${dto.title}"></c:out>' readonly>
+                                       value='<c:out value="${dto.title}"></c:out>'>
                             </div>
 
                             <div class="input-group mb-3">
                                 <span class="input-group-text">DueDate</span>
                                 <input class="form-control" type="date" name="dueDate"
-                                       value='<c:out value="${dto.dueDate}"></c:out>' readonly>
+                                       value='<c:out value="${dto.dueDate}"></c:out>'>
                             </div>
 
                             <div class="input-group mb-3">
@@ -79,8 +79,7 @@
                                     Finished &nbsp
                                 </label>
                                 <input class="form-check-input" type="checkbox"
-                                       name="finished" ${dto.finished?"checked":""}
-                                       disabled>
+                                       name="finished" ${dto.finished?"checked":""}>
                             </div>
 
                             <div class="my-4">
@@ -92,20 +91,43 @@
                             </div>
                         </form>
 
-
-                        <script>
-                            const formObj = document.querySelector("form")
-
-                            document.querySelector(".btn-danger").addEventListener("click", function (e) {
-                                e.preventDefault()
-                                e.stopPropagation()
-                                formObj.action = "/todo/remove"
-                                formObj.method = "post"
-                                formObj.submit()
-                            }, false);
-                        </script>
-
                     </div>
+                    <script>
+                        const formObj = document.querySelector("form")
+
+                        document.querySelector(".btn-danger").addEventListener("click", function (e) {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            formObj.action = "/todo/remove"
+                            formObj.method = "post"
+                            formObj.submit()
+                        }, false);
+
+                        document.querySelector(".btn-primary").addEventListener("click", function (e) {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            formObj.action = "/todo/modify"
+                            formObj.method = "post"
+                            formObj.submit()
+                        }, false);
+
+                        document.querySelector(".btn-secondary").addEventListener("click", function (e) {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            self.location = "/todo/list";
+                        }, false)
+                    </script>
+
+                    <script>
+                        const serverValidResult = {}
+
+                        <c:forEach items = "${errors}" var="error">
+                        serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
+                        </c:forEach>
+
+                        console.log(serverValidResult)
+                    </script>
+
                 </div>
             </div>
         </div>
