@@ -40,7 +40,7 @@ public class TodoController {
     public String registerPost(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         log.info("POST todo register........");
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             log.info("has errors.......");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/todo/register";
@@ -50,5 +50,13 @@ public class TodoController {
         todoService.register(todoDTO);
 
         return "redirect:/todo/list";
+    }
+
+    @GetMapping("/read")
+    public void read(Long tno, Model model) {
+        TodoDTO todoDTO = todoService.getOne(tno);
+        log.info(todoDTO);
+
+        model.addAttribute("dto", todoDTO);
     }
 }
