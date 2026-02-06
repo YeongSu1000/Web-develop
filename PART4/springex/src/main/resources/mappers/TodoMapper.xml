@@ -30,7 +30,12 @@
     <select id="selectList" resultType="org.zerock.springex.domain.TodoVO">
         select * from tbl_todo
         <foreach collection="types" item="'type">
-            #{type}
+            <if test="type == 't'.toString()">
+                title like concat('%', #{keyword}, '%')
+            </if>
+            <if test="type == 'w'.toString()">
+                writer like concat('%', #{keyword}, '%')
+            </if>
         </foreach>
         order by tno desc limit #{skip}, #{size}
     </select>
