@@ -44,11 +44,44 @@
         <div class="row content">
             <div class="col">
                 <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Search</h5>
+                        <form action="/todo/list" method="get">
+                            <input type="hidden" name="size" value="${pageRequestDTO.size}">
+                            <div class="mb-3">
+                                <input type="checkbox" name="finished">완료여부
+                            </div>
+                            <div class="mb-3">
+                                <input type="checkbox" name="types" value="t">제목
+                                <input type="checkbox" name="types" value="w">작성자
+                                <input type="text" name="keyword" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <input type="date" name="from" class="form-control">
+                                <input type="date" name="to" class="form-control">
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="float-end">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                    <button type="reset" class="btn btn-info">Clear</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row content">
+            <div class="col">
+                <div class="card">
                     <div class="card-header">
                         Featured
                     </div>
                     <div class="card-body">
-
                         <h5 class="card-title">Special title treatment</h5>
                         <table class="table">
                             <thead>
