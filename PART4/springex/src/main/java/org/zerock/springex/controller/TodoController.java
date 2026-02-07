@@ -68,9 +68,10 @@ public class TodoController {
 
         todoService.remove(tno);
 
-        redirectAttributes.addAttribute("page", 1);
-        redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
-        return "redirect:/todo/list";
+        // redirectAttributes.addAttribute("page", 1);
+        // redirectAttributes.addAttribute("size", pageRequestDTO.getSize());
+
+        return "redirect:/todo/list?" + pageRequestDTO.getLink();
     }
 
     @PostMapping("/modify")
