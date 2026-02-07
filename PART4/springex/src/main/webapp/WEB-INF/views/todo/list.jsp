@@ -67,7 +67,7 @@
                             <div class="input-group mb-3">
                                 <div class="float-end">
                                     <button type="submit" class="btn btn-primary">Search</button>
-                                    <button type="reset" class="btn btn-info">Clear</button>
+                                    <button type="reset" class="btn btn-info clearBtn">Clear</button>
                                 </div>
                             </div>
                         </form>
@@ -149,6 +149,14 @@
                                 const num = target.getAttribute("data-num")
 
                                 self.location = `/todo/list?page=\${num}`
+                            }, false)
+
+
+                            document.querySelector(".clearBtn").addEventListener("click", function (e) {
+                                e.preventDefault()
+                                e.stopPropagation()
+
+                                self.location = '/todo/list'
                             }, false)
 
                         </script>
