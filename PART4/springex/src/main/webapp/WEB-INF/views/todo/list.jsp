@@ -59,7 +59,7 @@
                                 <input type="text" name="keyword" class="form-control"
                                        value='<c:out value="${pageRequestDTO.keyword}"/>'>
                             </div>
-                            <div class="mb-3">
+                            <div class="input-group mb-3 dueDateDiv">
                                 <input type="date" name="from" class="form-control" value="${pageRequestDTO.from}">
                                 <input type="date" name="to" class="form-control" value="${pageRequestDTO.to}">
                             </div>
@@ -148,7 +148,14 @@
                                 }
                                 const num = target.getAttribute("data-num")
 
-                                self.location = `/todo/list?page=\${num}`
+                                // self.location = `/todo/list?page=\${num}`
+
+                                const formObj = document.querySelector("form")
+
+                                formObj.innerHTML += `<input type='hidden' name='page' value='\${num}'>`
+
+                                formObj.submit();
+
                             }, false)
 
 

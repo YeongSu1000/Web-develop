@@ -47,40 +47,38 @@ public class PageRequestDTO {
     }
 
     public String getLink() {
-        if (link == null) {
-            StringBuilder builder = new StringBuilder();
-            builder.append("page=" + this.page);
-            builder.append("&size=" + this.size);
 
-            if (finished) {
-                builder.append("&finished=on");
-            }
+        StringBuilder builder = new StringBuilder();
+        builder.append("page=" + this.page);
+        builder.append("&size=" + this.size);
 
-            if (types != null && types.length > 0) {
-                for (int i = 0; i < types.length; i++) {
-                    builder.append("&types=" + types[i]);
-                }
-            }
-
-            if(keyword != null){
-                try{
-                    builder.append("&keyword=" + URLEncoder.encode(keyword,"UTF-8"));
-                }catch(UnsupportedEncodingException e){
-                    e.printStackTrace();
-                }
-            }
-
-            if(from != null){
-                builder.append("&from=" + from.toString());
-            }
-
-            if(to != null){
-                builder.append("&to=" + to.toString());
-            }
-
-            link = builder.toString();
+        if (finished) {
+            builder.append("&finished=on");
         }
-        return link;
+
+        if (types != null && types.length > 0) {
+            for (int i = 0; i < types.length; i++) {
+                builder.append("&types=" + types[i]);
+            }
+        }
+
+        if (keyword != null) {
+            try {
+                builder.append("&keyword=" + URLEncoder.encode(keyword, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (from != null) {
+            builder.append("&from=" + from.toString());
+        }
+
+        if (to != null) {
+            builder.append("&to=" + to.toString());
+        }
+
+        return builder.toString();
     }
 
     public boolean checkType(String type) {
