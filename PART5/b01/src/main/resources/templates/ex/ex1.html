@@ -6,6 +6,13 @@
 </head>
 <body>
 
+<a th:href="@{/hello}">Go to /hello</a>
+
+<a th:href="@{/hello(name='AAA', age= 16)}">Go to /hello</a>
+
+<a th:href="@{/hello(name='한글 처리', age= 16)}">Go to /hello</a>
+
+<a th:href="@{/hello(types=${ {'AA','BB','CC'} }, age= 16)}">Go to /hello</a>
 <ul>
     <li th:each="str,status: ${list}">
         <span th:if="${status.odd}"> ODD -- [[${str}]]</span>
