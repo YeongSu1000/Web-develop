@@ -7,6 +7,12 @@
 <body>
 
 <ul>
+    <li th:each="str,status: ${list}">
+        [[${status.index}]] -- [[${str}]]
+    </li>
+</ul>
+
+<ul>
     <li th:each="str: ${list}" th:text="${str}"></li>
 </ul>
 
