@@ -28,7 +28,7 @@
                             <th scope="row">[[${dto.bno}]]</th>
                             <td>[[${dto.title}]]</td>
                             <td>[[${dto.writer}]]</td>
-                            <td>[[${dto.regDate}]]</td>
+                            <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
                         </tr>
                         </tbody>
                     </table>
