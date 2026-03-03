@@ -23,7 +23,7 @@
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">Title</span>
-                            <input type="text" class="form-control" th:value="${dto.title}">
+                            <input type="text" class="form-control" name="title" th:value="${dto.title}">
                         </div>
 
                         <div class="input-group mb-3">
@@ -65,6 +65,19 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
+
+    const errors = [[${errors}]]
+    console.log(errors)
+
+    let errorMsg = ''
+
+    if (errors) {
+        for (let i = 0; i < errors.length; i++) {
+            errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
+        }
+        history.replaceState({}, null, null)
+        alert(errorMsg)
+    }
 
 </script>
 
