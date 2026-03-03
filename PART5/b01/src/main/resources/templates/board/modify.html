@@ -102,6 +102,14 @@
 
     }, false)
 
+    document.querySelector(".listBtn").addEventListener("click", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        formObj.reset()
+        self.location =`/board/list?${link}`
+
+    }, false)
 
 </script>
 
