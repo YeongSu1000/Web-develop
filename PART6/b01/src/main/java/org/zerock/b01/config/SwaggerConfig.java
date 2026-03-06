@@ -1,6 +1,6 @@
 package org.zerock.b01.config;
 
-/*
+/* Legacy
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
