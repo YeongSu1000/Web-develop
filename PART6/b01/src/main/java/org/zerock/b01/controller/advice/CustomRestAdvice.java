@@ -1,5 +1,6 @@
 package org.zerock.b01.controller.advice;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+@Hidden
 @RestControllerAdvice
 @Log4j2
 public class CustomRestAdvice {
@@ -36,6 +38,7 @@ public class CustomRestAdvice {
 
         return ResponseEntity.badRequest().body(errorMap);
     }
+
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
