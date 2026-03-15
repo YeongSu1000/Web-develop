@@ -3,6 +3,7 @@ package org.zerock.b01.controller.advice;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -54,7 +55,7 @@ public class CustomRestAdvice {
         return ResponseEntity.badRequest().body(errorMap);
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
+    @ExceptionHandler({NoSuchElementException.class, EmptyResultDataAccessException.class})
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public ResponseEntity<Map<String, String>> handleNoSuchElement(Exception e) {
 
