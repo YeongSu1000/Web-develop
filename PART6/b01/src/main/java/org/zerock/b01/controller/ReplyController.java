@@ -76,4 +76,13 @@ public class ReplyController {
 
         return responseDTO;
     }
+
+    @Operation(summary = "Read Reply", description = "GET 방식으로 특정 댓글 조회")
+    @GetMapping(value = "/{rno}")
+    public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno) {
+
+        ReplyDTO replyDTO = replyService.read(rno);
+
+        return replyDTO;
+    }
 }
