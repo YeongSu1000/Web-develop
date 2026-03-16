@@ -90,7 +90,13 @@
 
     const bno = [[${dto.bno}]]
 
-    get1(bno)
+    //console.log(get1(bno))
+
+    get1(bno).then(data => {
+        console.log(data)
+    }).catch(e => {
+        console.error(e)
+    })
 
 </script>
 
