@@ -98,6 +98,19 @@
         console.error(e)
     })
 
+    function printReplies(page, size, goList) {
+
+        getList({bno, page, size, goList}).then(
+            data => {
+                console.log(data)
+            }
+        ).catch(e => {
+            console.error(e)
+        })
+    }
+
+    printReplies(1, 10)
+
 </script>
 
 </html>
