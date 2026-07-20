@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.log4j.Log4j2;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.zerock.b01.dto.upload.UploadFileDTO;
 import org.zerock.b01.dto.upload.UploadResultDTO;
 
@@ -77,6 +79,22 @@ public class UpDownController {
         }
 
         return null;
+    }
+
+    @Operation(summary = "view 파일", description = "GET방식으로 첨부파일 조회")
+    @GetMapping("/view/{fileName}")
+    public ResponseEntity<Resource> viewFileGET(@PathVariable String fileName) {
+
+        Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
+        String resourceName = resource.getFilename();
+        HttpHeaders headers = new HttpHeaders();
+
+        try {
+            headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().headers(headers).body(resource);
     }
 
 }
