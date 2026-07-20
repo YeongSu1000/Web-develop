@@ -33,7 +33,7 @@ public class Board extends BaseEntity {
     }
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "board") // BoardImage의 board변수
     @Builder.Default
     private Set<BoardImage> imageSet = new HashSet<>();
 
