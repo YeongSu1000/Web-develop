@@ -26,6 +26,9 @@ public class BoardRepositoryTests {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private ReplyRepository replyRepository;
+
     @Test
     public void testInsert() {
         IntStream.rangeClosed(1, 100).forEach(i -> {
@@ -205,5 +208,18 @@ public class BoardRepositoryTests {
 
         boardRepository.save(board);
     }
+
+    @Test
+    @Transactional
+    @Commit
+    public void testRemoveAll(){
+
+        Long bno = 1L;
+
+        replyRepository.deleteByBoard_bno(bno);
+
+        boardRepository.deleteById(bno);
+    }
+
 
 }
