@@ -166,4 +166,17 @@ public class BoardRepositoryTests {
 
         boardRepository.save(board);
     }
+
+    @Test
+    public void testReadWithImages(){
+
+        // 반드시 존재하는 bno로 확인
+        Optional<Board> result = boardRepository.findById(1L);
+
+        Board board = result.orElseThrow();
+
+        log.info(board);
+        log.info("--------------------");
+        log.info(board.getImageSet());
+    }
 }
