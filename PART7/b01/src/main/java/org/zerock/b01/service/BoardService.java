@@ -1,5 +1,6 @@
 package org.zerock.b01.service;
 
+import org.zerock.b01.domain.Board;
 import org.zerock.b01.dto.*;
 
 public interface BoardService {
@@ -19,4 +20,23 @@ public interface BoardService {
 
     // 게시글의 이미지와 댓글의 숫자까지 처리
     PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO);
+
+    default Board dtoToEntity(BoardDTO boardDTO) {
+
+        Board board = Board.builder()
+                .bno(boardDTO.getBno())
+                .title(boardDTO.getTitle())
+                .content(boardDTO.getContent())
+                .writer(boardDTO.getWriter())
+                .build();
+
+        if (boardDTO.getFileName() != null) {
+            boardDTO.getFileName().forEach(fileName -> {
+                String[] arr = fileName.split("_");
+                board.addImage(arr[0], arr[1]);
+            });
+        }
+        return board;
+    }
+
 }
