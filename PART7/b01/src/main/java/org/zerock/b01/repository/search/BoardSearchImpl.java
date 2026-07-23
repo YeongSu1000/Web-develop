@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.zerock.b01.domain.Board;
 import org.zerock.b01.domain.QBoard;
 import org.zerock.b01.domain.QReply;
+import org.zerock.b01.dto.BoardImageDTO;
 import org.zerock.b01.dto.BoardListAllDTO;
 import org.zerock.b01.dto.BoardListReplyCountDTO;
 
@@ -166,7 +167,17 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
                     .regDate(board1.getRegDate())
                     .replyCount(replyCount)
                     .build();
+
             // BoardImage를 BoardImageDTO 처리할 부분
+            List<BoardImageDTO> imageDTOS = board1.getImageSet().stream().sorted()
+                    .map(boardImage -> BoardImageDTO.builder()
+                            .uuid(boardImage.getUuid())
+                            .fileName(boardImage.getFileName())
+                            .ord(boardImage.getOrd())
+                            .build()
+                    ).collect(Collectors.toList());
+
+            dto.setBoardImages(imageDTOS); // 처리된 BoardImageDTO 들을 추가
 
             return dto;
         }).collect(Collectors.toList());
