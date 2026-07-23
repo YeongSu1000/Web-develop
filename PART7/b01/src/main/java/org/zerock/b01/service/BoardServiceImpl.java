@@ -48,6 +48,7 @@ public class BoardServiceImpl implements BoardService {
         return bno;
     }
 
+    /*
     @Override
     public BoardDTO readOne(Long bno) {
 
@@ -59,6 +60,21 @@ public class BoardServiceImpl implements BoardService {
 
         return boardDTO;
     }
+     */
+
+    @Override
+    public BoardDTO readOne(Long bno) {
+
+        // board_image 까지 조인 처리되는 findByWithImages()를 이용
+        Optional<Board> result = boardRepository.findByIdWithImages(bno);
+
+        Board board = result.orElseThrow();
+
+        BoardDTO boardDTO = entityToDTO(board);
+
+        return boardDTO;
+    }
+
 
     @Override
     public void modify(BoardDTO boardDTO) {
