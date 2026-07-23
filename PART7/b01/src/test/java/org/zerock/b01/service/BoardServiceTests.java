@@ -119,4 +119,12 @@ public class BoardServiceTests {
 
         boardService.modify(boardDTO);
     }
+
+    @Test
+    public void testRemoveAll(){
+
+        Long bno = 1L;
+
+        boardService.remove(bno);
+    }
 }
