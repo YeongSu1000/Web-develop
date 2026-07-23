@@ -25,10 +25,23 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
 
+    /*
     @Override
+
     public Long register(BoardDTO boardDTO) {
 
         Board board = modelMapper.map(boardDTO, Board.class);
+
+        Long bno = boardRepository.save(board).getBno();
+
+        return bno;
+    }
+*/
+
+    @Override
+    public Long register(BoardDTO boardDTO) {
+
+        Board board = dtoToEntity(boardDTO);
 
         Long bno = boardRepository.save(board).getBno();
 
