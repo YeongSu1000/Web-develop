@@ -35,6 +35,7 @@ public class BoardServiceTests {
         log.info("bno: " + bno);
     }
 
+    /*
     @Test
     public void testModify() {
 
@@ -47,6 +48,7 @@ public class BoardServiceTests {
 
         boardService.modify(boardDTO);
     }
+     */
 
     @Test
     public void testList() {
@@ -90,15 +92,31 @@ public class BoardServiceTests {
     @Test
     public void testReadAll() {
 
-        Long bno = 10L;
+        Long bno = 101L;
 
         BoardDTO boardDTO = boardService.readOne(bno);
 
         log.info(boardDTO);
 
-        for(String fileName : boardDTO.getFileName()){
+        for (String fileName : boardDTO.getFileName()) {
             log.info(fileName);
         }
 
+    }
+
+    @Test
+    public void testModify() {
+
+        // 변경에 필요한 데이터
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(101L)
+                .title("updated....101")
+                .content("Updated content 101...")
+                .build();
+
+        // 첨부파일을 하나 추가
+        boardDTO.setFileName(Arrays.asList(UUID.randomUUID() + "_zzz.jpg"));
+
+        boardService.modify(boardDTO);
     }
 }
