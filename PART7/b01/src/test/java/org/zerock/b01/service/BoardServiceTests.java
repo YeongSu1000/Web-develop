@@ -86,4 +86,19 @@ public class BoardServiceTests {
 
         log.info("bno: " + bno);
     }
+
+    @Test
+    public void testReadAll() {
+
+        Long bno = 10L;
+
+        BoardDTO boardDTO = boardService.readOne(bno);
+
+        log.info(boardDTO);
+
+        for(String fileName : boardDTO.getFileName()){
+            log.info(fileName);
+        }
+
+    }
 }
