@@ -152,6 +152,19 @@
         uploadResult.innerHTML += str
     }
 
+    function removeFile(uuid, fileName, obj){
+
+        console.log(uuid)
+        console.log(fileName)
+        console.log(obj)
+
+        const targetDiv = obj.closest(".card")
+
+        removeFileToServer(uuid, fileName).then(data => {
+            targetDiv.remove()
+        })
+    }
+
 </script>
 
 </html>
