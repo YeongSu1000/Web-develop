@@ -33,6 +33,6 @@ public class BoardDTO {
     private LocalDateTime modDate;
 
     // 첨부파일의 이름들
-    private List<String> fileName;
+    private List<String> fileNames;
 
 }

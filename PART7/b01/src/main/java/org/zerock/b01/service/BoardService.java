@@ -33,8 +33,8 @@ public interface BoardService {
                 .writer(boardDTO.getWriter())
                 .build();
 
-        if (boardDTO.getFileName() != null) {
-            boardDTO.getFileName().forEach(fileName -> {
+        if (boardDTO.getFileNames() != null) {
+            boardDTO.getFileNames().forEach(fileName -> {
                 String[] arr = fileName.split("_");
                 board.addImage(arr[0], arr[1]);
             });
@@ -56,7 +56,7 @@ public interface BoardService {
         List<String> fileNames = board.getImageSet().stream().sorted().map(boardImage ->
                 boardImage.getUuid() + "_" + boardImage.getFileName()).collect(Collectors.toList());
 
-        boardDTO.setFileName(fileNames);
+        boardDTO.setFileNames(fileNames);
 
         return boardDTO;
     }
