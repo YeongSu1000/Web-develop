@@ -11,12 +11,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.zerock.b01.security.CustomUserDetailsService;
+
+import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class CustomSecurityConfig {
+
+    // 주입 필요
+    private final DataSource dataSource;
+    private final CustomUserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -35,11 +44,27 @@ public class CustomSecurityConfig {
         // [현재 수정 코드 (Spring Boot 3 / JDK 17 람다 스타일)]
         // Boot 3부터는 람다식을 필수로 요구하므로 아래와 같이 변경함.
         http.formLogin(formLogin -> {
-            formLogin.loginPage("/member/login");
+            formLogin.loginPage("/member/login"); // 커스텀 로그인 페이지
         });
 
         // [부트 3 필수 변경] 레거시 http.csrf().disable()을 람다식 스타일로 전면 교정
-        http.csrf(csrf -> csrf.disable());
+        http.csrf(csrf -> csrf.disable()); // CSRF 토큰 비활성화
+
+        /*
+        http.rememberMe()
+                .key("12345678")
+                .tokenRepository(persistentTokenRepository())
+                .userDetailsService(userDetailsService)
+                .tokenValiditySeconds(60*60*24*30);
+*/
+
+        http.rememberMe(rememberMe -> {
+            rememberMe.key("12345678")
+                    .tokenRepository(persistentTokenRepository())
+                    .userDetailsService(userDetailsService)
+                    .tokenValiditySeconds(60*60*24*30);
+
+        });
 
         return http.build();
     }
@@ -51,5 +76,12 @@ public class CustomSecurityConfig {
 
         return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+        return repo;
     }
 }
