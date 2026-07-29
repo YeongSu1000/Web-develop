@@ -36,7 +36,7 @@ public class CustomSecurityConfig {
         // Boot 3부터는 람다식을 필수로 요구하므로 아래와 같이 변경함.
         // 아직 커스텀 로그인 페이지가 없으므로 내부 설정은 비워두어 스프링 기본 로그인창을 쓰도록 유도.
         http.formLogin(formLogin -> {
-
+            formLogin.loginPage("/member/login");
         });
 
         return http.build();
