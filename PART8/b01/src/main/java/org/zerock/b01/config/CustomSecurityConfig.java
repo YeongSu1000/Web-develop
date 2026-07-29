@@ -34,10 +34,12 @@ public class CustomSecurityConfig {
 
         // [현재 수정 코드 (Spring Boot 3 / JDK 17 람다 스타일)]
         // Boot 3부터는 람다식을 필수로 요구하므로 아래와 같이 변경함.
-        // 아직 커스텀 로그인 페이지가 없으므로 내부 설정은 비워두어 스프링 기본 로그인창을 쓰도록 유도.
         http.formLogin(formLogin -> {
             formLogin.loginPage("/member/login");
         });
+
+        // [부트 3 필수 변경] 레거시 http.csrf().disable()을 람다식 스타일로 전면 교정
+        http.csrf(csrf -> csrf.disable());
 
         return http.build();
     }
