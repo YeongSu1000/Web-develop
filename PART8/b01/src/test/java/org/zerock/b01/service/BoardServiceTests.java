@@ -76,7 +76,7 @@ public class BoardServiceTests {
                 .writer("user00")
                 .build();
 
-        boardDTO.setFileName(
+        boardDTO.setFileNames(
                 Arrays.asList(
                         UUID.randomUUID() + "_aaa.jpg",
                         UUID.randomUUID() + "_bbb.jpg",
@@ -97,7 +97,7 @@ public class BoardServiceTests {
 
         log.info(boardDTO);
 
-        for (String fileName : boardDTO.getFileName()) {
+        for (String fileName : boardDTO.getFileNames()) {
             log.info(fileName);
         }
 
@@ -114,7 +114,7 @@ public class BoardServiceTests {
                 .build();
 
         // 첨부파일을 하나 추가
-        boardDTO.setFileName(Arrays.asList(UUID.randomUUID() + "_zzz.jpg"));
+        boardDTO.setFileNames(Arrays.asList(UUID.randomUUID() + "_zzz.jpg"));
 
         boardService.modify(boardDTO);
     }
