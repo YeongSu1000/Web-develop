@@ -72,6 +72,12 @@ public class CustomSecurityConfig {
             httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(accessDeniedHandler()); // 403
         });
 
+        // http.oauth2Login().loginPage("/member/login");
+        //  스프링 부트 3 표준 람다식 스펙에 맞춘 코드
+        http.oauth2Login(oauth2Login -> {
+            oauth2Login.loginPage("/member/login");
+        });
+
         return http.build();
     }
 
