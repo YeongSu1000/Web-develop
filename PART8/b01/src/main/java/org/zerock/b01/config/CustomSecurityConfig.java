@@ -12,10 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.zerock.b01.security.CustomUserDetailsService;
 import org.zerock.b01.security.handler.Custom403Handler;
+import org.zerock.b01.security.handler.CustomSocialLoginSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -76,9 +78,15 @@ public class CustomSecurityConfig {
         //  스프링 부트 3 표준 람다식 스펙에 맞춘 코드
         http.oauth2Login(oauth2Login -> {
             oauth2Login.loginPage("/member/login");
+            oauth2Login.successHandler(authenticationSuccessHandler());
         });
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+        return new CustomSocialLoginSuccessHandler(passwordEncoder());
     }
 
     @Bean
