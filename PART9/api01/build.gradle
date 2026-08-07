@@ -43,6 +43,8 @@ dependencies {
     기존 springfox 2줄을 지우고 아래 1줄로 교체해주세요. */
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
+    implementation 'com.google.code.gson:gson:2.11.0'
+
 
 }
 
