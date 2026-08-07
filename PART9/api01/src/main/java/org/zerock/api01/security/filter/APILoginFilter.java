@@ -1,5 +1,6 @@
 package org.zerock.api01.security.filter;
 
+import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,6 +10,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.Map;
 
 @Log4j2
 public class APILoginFilter extends AbstractAuthenticationProcessingFilter {
@@ -22,6 +26,30 @@ public class APILoginFilter extends AbstractAuthenticationProcessingFilter {
 
         log.info("APILoginFilter----------------");
 
+        if (request.getMethod().equalsIgnoreCase("GET")) {
+            log.info("GET METHOD NOT SUPPORT");
+            return null;
+        }
+
+        Map<String, String> jsonData = parseRequestJSON(request);
+
+        log.info(jsonData);
+
         return null;
     }
+
+    private Map<String, String> parseRequestJSON(HttpServletRequest request) {
+
+        //JSON 데이터를 분석해서 mid, mpw 전달 값을 Map 으로 처리
+        try (Reader reader = new InputStreamReader(request.getInputStream())) {
+
+            Gson gson = new Gson();
+
+            return gson.fromJson(reader, Map.class);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+        return null;
+    }
+
 }
