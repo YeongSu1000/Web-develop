@@ -24,15 +24,15 @@ public class JWTUtil {
 
         // 헤더 부분
         Map<String, Object> header = new HashMap<>();
-        header.put("typ","JWT");
-        header.put("alg","HS256");
+        header.put("typ", "JWT");
+        header.put("alg", "HS256");
 
         // payload 부분 설정
         Map<String, Object> payload = new HashMap<>();
         payload.putAll(valueMap);
 
         // 테스트 시에는 짧은 유효 기간
-        int time = (1) * days;  // 테스트는 분단위로 나중에 60 * 24 (일) 단위 변경
+        int time = (60 * 24) * days;  // 테스트는 분단위로 나중에 60 * 24 (일) 단위 변경
 
         String jwtStr = Jwts.builder()
                 .setHeader(header)
