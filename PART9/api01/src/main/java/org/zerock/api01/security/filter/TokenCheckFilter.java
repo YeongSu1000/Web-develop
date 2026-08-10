@@ -27,7 +27,7 @@ public class TokenCheckFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        if (!path.startsWith("/api")) {
+        if (!path.startsWith("/api/")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -35,7 +35,12 @@ public class TokenCheckFilter extends OncePerRequestFilter {
         log.info("Token Check Filter................");
         log.info("JWTUtil: " + jwtUtil);
 
-        filterChain.doFilter(request, response);
+        try{
+            validateAccessToken(request);
+            filterChain.doFilter(request, response);
+        }catch (AccessTokenException accessTokenException){
+            accessTokenException.sendResponseError(response);
+        }
 
     }
 
