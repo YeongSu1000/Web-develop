@@ -17,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.zerock.api01.security.APIUserDetailsService;
 import org.zerock.api01.security.filter.APILoginFilter;
+import org.zerock.api01.security.filter.RefreshTokenFilter;
 import org.zerock.api01.security.filter.TokenCheckFilter;
 import org.zerock.api01.security.handler.APILoginSuccessHandler;
 import org.zerock.api01.util.JWTUtil;
@@ -33,16 +34,16 @@ public class CustomSecurityConfig {
     private final JWTUtil jwtUtil;
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){
+    public WebSecurityCustomizer webSecurityCustomizer() {
 
         log.info("-------------web configure--------------");
 
-        return(web) -> web.ignoring()
+        return (web) -> web.ignoring()
                 .requestMatchers(
                         PathRequest.toStaticResources().atCommonLocations());
     }
@@ -80,6 +81,10 @@ public class CustomSecurityConfig {
                 tokenCheckFilter(jwtUtil),
                 UsernamePasswordAuthenticationFilter.class);
 
+        // refreshToken 호출 처리
+        http.addFilterBefore(new RefreshTokenFilter("/refreshToken", jwtUtil),
+                TokenCheckFilter.class);
+
         http.csrf(csrf -> csrf.disable()); // CSRF 토큰 비활성화
 
         // http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션을 사용하지 않음
@@ -88,7 +93,7 @@ public class CustomSecurityConfig {
         return http.build();
     }
 
-    private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil){
+    private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil) {
         return new TokenCheckFilter(jwtUtil);
     }
 
