@@ -69,7 +69,8 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
         }
 
         // RefreshToken의 유효 시간이 얼마 남지 않은 경우
-        Long exp = (Long) refreshClaims.get("exp");
+       // Long exp = (Long) refreshClaims.get("exp");
+        Long exp = ((Number) refreshClaims.get("exp")).longValue();
 
         Date expTime = new Date(Instant.ofEpochMilli(exp).toEpochMilli() * 1000);
 
