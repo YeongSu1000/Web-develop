@@ -2,6 +2,7 @@ package org.zerock.api01.security.filter;
 
 import com.google.gson.Gson;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -46,20 +47,65 @@ public class RefreshTokenFilter extends OncePerRequestFilter {
 
         log.info("accessToken: " + accessToken);
         log.info("refreshToken: " + refreshToken);
+
+        try {
+            checkAccessToken(accessToken);
+        } catch (RefreshTokenException refreshTokenException) {
+            refreshTokenException.sendResponseError(response);
+            return; // 더이상 실행할 필요 없음
+        }
+
+        Map<String, Object> refreshClaim = null;
+
+        try {
+            refreshClaim = checkRefreshToken(refreshToken);
+            log.info(refreshClaim);
+        } catch (RefreshTokenException refreshTokenException) {
+            refreshTokenException.sendResponseError(response);
+            return; // 더 이상 실행할 코드가 없음
+        }
     }
 
-    private Map<String, String> parseRequestJSON(HttpServletRequest request){
+    private Map<String, String> parseRequestJSON(HttpServletRequest request) {
 
-        try(Reader reader = new InputStreamReader(request.getInputStream())){
+        try (Reader reader = new InputStreamReader(request.getInputStream())) {
 
             Gson gson = new Gson();
 
             return gson.fromJson(reader, Map.class);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
         return null;
+    }
+
+    private void checkAccessToken(String accessToken) throws RefreshTokenException {
+
+        try {
+            jwtUtil.validateToken(accessToken);
+        } catch (ExpiredJwtException expiredJwtException) {
+            log.info("Access Token has expired");
+        } catch (Exception exception) {
+            throw new RefreshTokenException(RefreshTokenException.ErrorCase.NO_ACCESS);
+        }
+
+    }
+
+    private Map<String, Object> checkRefreshToken(String refreshToken) throws RefreshTokenException {
+
+        try {
+            Map<String, Object> values = jwtUtil.validateToken(refreshToken);
+            return values;
+        } catch (ExpiredJwtException expiredJwtException) {
+            throw new RefreshTokenException(RefreshTokenException.ErrorCase.OLD_REFRESH);
+        } catch (MalformedJwtException malformedJwtException) {
+            log.error("MalformedJwtException-----------------------");
+            throw new RefreshTokenException(RefreshTokenException.ErrorCase.NO_REFRESH);
+        } catch (Exception exception) {
+            throw new RefreshTokenException(RefreshTokenException.ErrorCase.NO_REFRESH);
+        }
+
     }
 
 }
