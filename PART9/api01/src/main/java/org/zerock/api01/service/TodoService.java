@@ -8,4 +8,5 @@ public interface TodoService {
 
     Long register(TodoDTO todoDTO);
 
+    TodoDTO read(Long tno);
 }
